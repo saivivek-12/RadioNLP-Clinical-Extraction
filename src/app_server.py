@@ -36,10 +36,16 @@ from inference_engine import analyze_report
 
 INDEX_HTML_PATH = os.path.join(os.path.dirname(__file__), "index.html")
 
-# Initialize EasyOCR reader (English)
-print("Initializing EasyOCR Engine...")
-_OCR_READER = easyocr.Reader(['en'], gpu=False, verbose=False)
-print("EasyOCR Engine initialized successfully!")
+# Lazy-loaded EasyOCR reader to ensure instantaneous port binding on cloud hosts
+_OCR_READER = None
+
+def get_ocr_reader():
+    global _OCR_READER
+    if _OCR_READER is None:
+        print("Initializing EasyOCR Engine on demand...")
+        _OCR_READER = easyocr.Reader(['en'], gpu=False, verbose=False)
+        print("EasyOCR Engine initialized successfully!")
+    return _OCR_READER
 
 def clean_and_format_clinical_text(raw_lines):
     """Formats clinical sections with clean spacing for readability."""
@@ -93,7 +99,7 @@ def extract_text_from_pdf(pdf_bytes):
                 bitmap = page.render(scale=2.0)
                 pil_image = bitmap.to_pil()
                 img_np = np.array(pil_image)
-                ocr_results = _OCR_READER.readtext(img_np, detail=0)
+                ocr_results = get_ocr_reader().readtext(img_np, detail=0)
                 if ocr_results:
                     formatted_page = clean_and_format_clinical_text(ocr_results)
                     ocr_text_parts.append(formatted_page)
@@ -167,7 +173,7 @@ class ServerHandler(BaseHTTPRequestHandler):
 
 def run(port=None):
     if port is None:
-        port = int(os.environ.get("PORT", 8501))
+        port = int(os.environ.get("PORT", 10000))
     server = HTTPServer(('0.0.0.0', port), ServerHandler)
     url = f"http://localhost:{port}"
     print(f"\n=======================================================")
