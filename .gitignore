@@ -1,0 +1,17 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Large Model Checkpoints (>100MB exceeds GitHub file size limit)
+# Note: Full training script is provided in src/train_clinicalbert.py
+models/best_clinicalbert_model.pt
+
+# Operating System Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Temporary log files
+*.log

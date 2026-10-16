@@ -1,0 +1,39 @@
+{
+  "history": {
+    "train_loss": [
+      0.9282,
+      0.7338,
+      0.6085,
+      0.5376
+    ],
+    "val_loss": [
+      0.833,
+      0.6679,
+      0.581,
+      0.548
+    ],
+    "val_auc": [
+      0.7868,
+      0.8692,
+      0.9103,
+      0.9218
+    ],
+    "val_macro_f1": [
+      0.1877,
+      0.3144,
+      0.3797,
+      0.4199
+    ]
+  },
+  "test_auc_per_finding": {
+    "Normal": 0.9785,
+    "Cardiomegaly": 0.9275,
+    "Edema": 0.8175,
+    "Atelectasis": 0.9706,
+    "Effusion": 0.8916,
+    "Pneumonia": 0.8716,
+    "Granuloma": 0.9869,
+    "Emphysema": 0.8818
+  },
+  "test_macro_auc": 0.9158
+}

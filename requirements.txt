@@ -1,0 +1,11 @@
+torch
+transformers
+scikit-learn
+numpy
+pandas
+pillow
+pdfplumber
+pypdfium2
+easyocr
+joblib
+python-pptx
