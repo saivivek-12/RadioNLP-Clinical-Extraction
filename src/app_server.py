@@ -29,8 +29,9 @@ import pypdfium2
 import easyocr
 import webbrowser
 from http.server import HTTPServer, BaseHTTPRequestHandler
-
-sys.path.append(r"C:\Users\palem\OneDrive\Documents\3rd Year\Machine Learning\src")
+SRC_DIR = os.path.dirname(os.path.abspath(__file__))
+if SRC_DIR not in sys.path:
+    sys.path.append(SRC_DIR)
 from inference_engine import analyze_report
 
 INDEX_HTML_PATH = os.path.join(os.path.dirname(__file__), "index.html")
@@ -164,12 +165,14 @@ class ServerHandler(BaseHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(json.dumps({"error": str(e)}).encode("utf-8"))
 
-def run(port=8501):
-    server = HTTPServer(('', port), ServerHandler)
+def run(port=None):
+    if port is None:
+        port = int(os.environ.get("PORT", 8501))
+    server = HTTPServer(('0.0.0.0', port), ServerHandler)
     url = f"http://localhost:{port}"
     print(f"\n=======================================================")
-    print(f" RadioNLP Dashboard is READY!")
-    print(f" Opening in your web browser: {url}")
+    print(f" RadioNLP Dashboard is READY on port {port}!")
+    print(f" Access URL: {url}")
     print(f"=======================================================\n")
     try:
         webbrowser.open(url)
@@ -181,4 +184,4 @@ def run(port=8501):
         server.server_close()
 
 if __name__ == "__main__":
-    run(8501)
+    run()

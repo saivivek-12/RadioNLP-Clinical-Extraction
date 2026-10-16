@@ -8,7 +8,8 @@ import joblib
 import numpy as np
 import re
 
-MODEL_DIR = r"C:\Users\palem\OneDrive\Documents\3rd Year\Machine Learning\models"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_DIR = os.path.join(BASE_DIR, "models")
 VEC_PATH = os.path.join(MODEL_DIR, "tfidf_vectorizer.pkl")
 CLF_PATH = os.path.join(MODEL_DIR, "clinical_classifiers.pkl")
 
