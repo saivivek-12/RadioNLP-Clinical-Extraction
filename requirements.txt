@@ -1,8 +1,7 @@
+Flask
 scikit-learn
+joblib
 numpy
 pandas
-pillow
 pdfplumber
 pypdfium2
-joblib
-python-pptx
